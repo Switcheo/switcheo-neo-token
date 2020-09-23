@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace NEP5
 {
-    [Features(ContractFeatures.HasStorage)]
+    // [Features(ContractFeatures.HasStorage)]
     public class NEP5 : SmartContract
     {
         [DisplayName("transfer")]
@@ -129,7 +129,7 @@ namespace NEP5
 
           //Mint tokens to minter contract
           var minterAmount = asset.Get(Minter).TryToBigInteger();
-          asset.Put(from, minterAmount + amount);
+          asset.Put(Minter, minterAmount + amount);
 
           //Update supply
           contract.Put("totalSupply", TotalSupply() + amount);
@@ -147,7 +147,7 @@ namespace NEP5
           var newAmount = minterAmount - amount;
           if (newAmount < 0)
               throw new InvalidOperationException("Trying to burn more than in minter.");
-          asset.Put(from, newAmount);
+          asset.Put(Minter, newAmount);
 
           //Update supply
           var newSupply = TotalSupply() - amount;
