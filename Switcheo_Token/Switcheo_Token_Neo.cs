@@ -35,8 +35,6 @@ namespace NEP5
 
                 if (method == "symbol") return Symbol();
 
-                if (method == "supportedStandards") return SupportedStandards();
-
                 if (method == "totalSupply") return TotalSupply();
 
                 if (method == "transfer") return Transfer((byte[])args[0], (byte[])args[1], (BigInteger)args[2], callscript);
@@ -57,13 +55,10 @@ namespace NEP5
         public static byte Decimals() => 8;
 
         [DisplayName("name")]
-        public static string Name() => "Switcheo Token (NEO)";
+        public static string Name() => "Switcheo";
 
         [DisplayName("symbol")]
-        public static string Symbol() => "SWTH-N";
-
-        [DisplayName("supportedStandards")]
-        public static string[] SupportedStandards() => new string[] { "NEP-5", "NEP-7", "NEP-10" };
+        public static string Symbol() => "SWTH";
 
         [DisplayName("totalSupply")]
         public static BigInteger TotalSupply()
@@ -84,8 +79,6 @@ namespace NEP5
                 throw new InvalidOperationException("The parameters from and to SHOULD be 20-byte addresses.");
             if (amount <= 0)
                 throw new InvalidOperationException("The parameter amount MUST be greater than 0.");
-            if (!IsPayable(to))
-                return false;
             if (!Runtime.CheckWitness(from) && from.TryToBigInteger() != callscript.TryToBigInteger())
                 return false;
 
@@ -157,12 +150,6 @@ namespace NEP5
 
           //Signify burn by transfer to null address
           Transferred(Minter, null, amount);
-        }
-
-        private static bool IsPayable(byte[] to)
-        {
-            var c = Blockchain.GetContract(to);
-            return c == null || c.IsPayable;
         }
     }
 
