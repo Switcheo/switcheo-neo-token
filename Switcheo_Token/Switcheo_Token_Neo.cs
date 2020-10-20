@@ -84,6 +84,9 @@ namespace NEP5
 
             //Mint tokens first if minter is sender
             if (from.TryToBigInteger() == Minter.TryToBigInteger()) {
+                if (from == to) {
+                  throw new InvalidOperationException("Cannot mint to minter address.");
+                }
                 Mint(amount);
             }
 
@@ -139,13 +142,13 @@ namespace NEP5
           var minterAmount = asset.Get(Minter).TryToBigInteger();
           var newAmount = minterAmount - amount;
           if (newAmount < 0)
-              throw new InvalidOperationException("Trying to burn more than in minter.");
+              throw new InvalidOperationException("Cannot burn more than in minter.");
           asset.Put(Minter, newAmount);
 
           //Update supply
           var newSupply = TotalSupply() - amount;
           if (newSupply < 0)
-             throw new InvalidOperationException("Trying to burn more than current supply.");
+             throw new InvalidOperationException("Cannot burn more than current supply.");
           contract.Put("totalSupply", newSupply);
 
           //Signify burn by transfer to null address
