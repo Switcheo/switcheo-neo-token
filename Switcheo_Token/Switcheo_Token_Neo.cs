@@ -13,7 +13,7 @@ namespace NEP5
         [DisplayName("transfer")]
         public static event Action<byte[], byte[], BigInteger> Transferred;
 
-        private static readonly byte[] Minter = "AHwoWtUgwruKoGZ8hLrEHr1erESfd2Lf9Z".ToScriptHash(); // Dev: AJjGh9yY1MpbtBvD8rDDLKpyT3bizT3XA3
+        private static readonly byte[] Minter = "AJedCGpz28puGEA75nUNZUCEechim7SHua".ToScriptHash(); // Dev: AJjGh9yY1MpbtBvD8rDDLKpyT3bizT3XA3
 
         private static readonly byte[] Owner = "AXZskPYG5JBM6nhpNZBMKZrxhHnyca1614".ToScriptHash(); // Dev: AHDfSLZANnJ4N9Rj3FCokP14jceu3u7Bvw
 
